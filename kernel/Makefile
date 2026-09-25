@@ -13,7 +13,9 @@ RUNTIME_OBJECTS := \
 	$(BUILD)/runtime/memory.o \
 	$(BUILD)/runtime/trace.o \
 	$(BUILD)/startup/boot.o \
-	$(BUILD)/startup/vectors.o
+	$(BUILD)/startup/vectors.o \
+	$(BUILD)/startup/irq.o \
+	$(BUILD)/uart.o
 
 OBJECTS := $(CORE_OBJECT) $(RUNTIME_OBJECTS)
 DEPENDENCIES := $(OBJECTS:.o=.d)
@@ -82,6 +84,11 @@ $(BUILD)/runtime/%.o: src/runtime/%.c
 $(BUILD)/startup/%.o: src/startup/%.S
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(ASFLAGS) -c $< -o $@
+
+$(BUILD)/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
 
 clean:
 	rm -rf $(BUILD)
