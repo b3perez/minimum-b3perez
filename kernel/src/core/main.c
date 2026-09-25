@@ -1,6 +1,7 @@
 #include "minemu/boot.h"
 #include "minemu/trap.h"
 #include "minemu/trace.h"
+#include "minemu/platform.h"
 
 void minemu_kernel_main(const struct minemu_boot_info *boot_info) {
     if ((uintptr_t)boot_info != MINEMU_BOOT_INFO_VADDR ||
@@ -15,5 +16,17 @@ void minemu_kernel_main(const struct minemu_boot_info *boot_info) {
         minemu_fail_stop();
     }
     minemu_trace_event(1);
+    MINEMU_UART0->tx_data = (uint32_t)'h';
+    MINEMU_UART0->tx_data = (uint32_t)'e';
+    MINEMU_UART0->tx_data = (uint32_t)'l';
+    MINEMU_UART0->tx_data = (uint32_t)'l';
+    MINEMU_UART0->tx_data = (uint32_t)'o';
+    MINEMU_UART0->tx_data = (uint32_t)' ';
+    MINEMU_UART0->tx_data = (uint32_t)'w';
+    MINEMU_UART0->tx_data = (uint32_t)'o';
+    MINEMU_UART0->tx_data = (uint32_t)'r';
+    MINEMU_UART0->tx_data = (uint32_t)'l';
+    MINEMU_UART0->tx_data = (uint32_t)'d';
+    MINEMU_UART0->tx_data = (uint32_t)'\n';
     minemu_fail_stop();
 }
